@@ -1,11 +1,12 @@
+<a href="https://glama.ai/mcp/servers/5vbvsljk42">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/5vbvsljk42/badge" />
+</a>
+
+
 # LinkedIn Profile Analyzer MCP
 
 A powerful LinkedIn profile analyzer MCP (Machine Control Protocol) server that interacts with LinkedIn's API to fetch, analyze, and manage LinkedIn posts data. This MCP is specifically designed to work with Claude AI.
 
-
-<a href="https://glama.ai/mcp/servers/5vbvsljk42">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/5vbvsljk42/badge" />
-</a>
 
 ## Features
 
