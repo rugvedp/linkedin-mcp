@@ -64,9 +64,16 @@ The `mcp.json` file configures the LinkedIn MCP server:
 ```json
 {
   "mcpServers": {
-    "linedin": {
-      "command": "python",
-      "args": ["E:/mcp/linkedin.py"]
+    "LinkedIn Updated": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp[cli]",
+        "mcp",
+        "run",
+        "path/to/your/script.py"
+      ]
     }
   }
 }
