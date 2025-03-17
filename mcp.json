@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "LinkedIn Updated": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp[cli]",
+        "mcp",
+        "run",
+        "path/to/your/script.py"
+      ]
+    }
+  }
+}
