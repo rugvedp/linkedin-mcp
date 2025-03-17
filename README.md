@@ -153,5 +153,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - RapidAPI for providing LinkedIn data access
 - Anthropic for Claude AI capabilities
-
-## Project Structure 
