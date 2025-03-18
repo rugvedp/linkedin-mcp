@@ -53,14 +53,15 @@ def fetch_and_save_linkedin_posts(username: str) -> str:
     return f"Data saved in {DATA_FILE}"
 
 
+
 @mcp.tool()
-def get_saved_posts(start: int = 0, limit: int = 10) -> dict:
+def get_saved_posts(start: int = 0, limit: int = 5) -> dict:
     """
     Retrieve saved LinkedIn posts with pagination.
     
     Args:
         start (int): Index of the first post to retrieve.
-        limit (int): Number of posts to return.
+        limit (int): Number of posts to return (Max: 5).
     
     Returns:
         dict: Contains retrieved posts and a flag for more data availability.
@@ -68,21 +69,26 @@ def get_saved_posts(start: int = 0, limit: int = 10) -> dict:
     if not os.path.exists(DATA_FILE):
         return {"message": "No data found. Fetch posts first using fetch_and_save_linkedin_posts().", "posts": []}
 
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        posts = json.load(f)
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            posts = json.load(f)
+
+        total_posts = len(posts)
+
+        # Ensure limit does not exceed 5 posts
+        limit = min(limit, 5)
+
+        paginated_posts = posts[start:start + limit]
+
+        return {
+            "posts": paginated_posts,
+            "total_posts": total_posts,
+            "has_more": start + limit < total_posts
+        }
+
+    except json.JSONDecodeError:
+        return {"message": "Error reading data file. JSON might be corrupted.", "posts": []}
     
-    total_posts = len(posts)
-    
-    # Slice the posts list based on start and limit
-    paginated_posts = posts[start:start + limit]
-
-    return {
-        "posts": paginated_posts,
-        "has_more": start + limit < total_posts,
-        "next_start": start + limit if start + limit < total_posts else None
-    }
-
-
 @mcp.tool()
 def search_posts(keyword: str) -> dict:
     """
@@ -105,8 +111,8 @@ def search_posts(keyword: str) -> dict:
     return {
         "keyword": keyword,
         "total_results": len(filtered_posts),
-        "posts": filtered_posts[:10],  # Show only first 10 results initially
-        "has_more": len(filtered_posts) > 10
+        "posts": filtered_posts[:5],  # Show only first 10 results initially
+        "has_more": len(filtered_posts) > 5
     }
 
 
@@ -169,6 +175,7 @@ def get_posts_by_date(start_date: str, end_date: str) -> dict:
         "start_date": start_date,
         "end_date": end_date,
         "total_results": len(filtered_posts),
-        "posts": filtered_posts[:10],  # Show only first 10 results initially
-        "has_more": len(filtered_posts) > 10
+        "posts": filtered_posts[:5],  # Show only first 10 results initially
+        "has_more": len(filtered_posts) > 5
     }
+
